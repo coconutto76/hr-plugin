@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>퇴직 위험 신호 부서별 요약 2026-04-30</title>
+<style>:root {
+  color-scheme: dark;
+  --bg: #131518;
+  --panel: #1b1e23;
+  --panel-2: #22262c;
+  --line: #2e333b;
+  --text: #e7e9ec;
+  --muted: #9ba2ac;
+  --accent: #7aa7ff;
+  --hi: #ef6a5e;
+  --mid: #e8b04a;
+  --lo: #58b88f;
+  --na: #7b8290;
+  --radius: 10px;
+  --gutter: 16px;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 14px/1.55 "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+a { color: var(--accent); }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--gutter) 56px; }
+header.top { padding: 22px 0 10px; }
+header.top h1 { margin: 0 0 4px; font-size: 20px; font-weight: 650; letter-spacing: -0.01em; }
+header.top .sub { color: var(--muted); font-size: 13px; }
+.chip { display: inline-block; padding: 1px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); color: var(--muted); font-size: 12px; margin-right: 6px; }
+.banner { margin: 10px 0; padding: 10px 14px; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; background: var(--panel); color: var(--text); font-size: 13px; }
+.banner.warn { border-left-color: var(--mid); }
+.banner b { font-weight: 650; }
+
+nav.jump { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 2px; font-size: 13px; }
+nav.jump a { color: var(--muted); text-decoration: none; }
+nav.jump a:hover { color: var(--text); }
+
+.filters {
+  position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: flex-end;
+  margin: 10px calc(var(--gutter) * -1); padding: 10px var(--gutter);
+  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line);
+}
+.filters label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--muted); }
+.filters .spacer { flex: 1; }
+.filters .count { color: var(--muted); font-size: 12px; padding-bottom: 7px; }
+input, select, button {
+  font: inherit; color: var(--text); background: var(--panel-2); border: 1px solid var(--line); border-radius: 7px; padding: 6px 9px; min-height: 32px;
+}
+input::placeholder { color: #6f7680; }
+input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-visible, .clickable:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+button { cursor: pointer; }
+button:hover { background: #2a2f36; }
+button.ghost { background: transparent; }
+button.on { border-color: var(--accent); }
+
+section.screen { margin-top: 30px; scroll-margin-top: 70px; }
+section.screen > h2 { display: flex; align-items: baseline; gap: 8px; margin: 0 0 12px; font-size: 16px; font-weight: 650; }
+section.screen > h2 .no { color: var(--muted); font-weight: 500; font-size: 13px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+.reason { padding: 18px; border: 1px dashed var(--line); border-radius: var(--radius); color: var(--muted); background: var(--panel); }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; }
+.tile .k { color: var(--muted); font-size: 12px; }
+.tile .v { font-size: 26px; font-weight: 650; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.tile .f { color: var(--muted); font-size: 12px; min-height: 18px; }
+.tile.g-hi .v { color: var(--hi); } .tile.g-mid .v { color: var(--mid); } .tile.g-lo .v { color: var(--lo); } .tile.g-na .v { color: var(--na); }
+.lines { margin: 12px 0 0; padding-left: 20px; color: var(--text); }
+.lines li { margin: 3px 0; }
+
+.grade { display: inline-block; min-width: 2.6em; text-align: center; padding: 1px 8px; border-radius: 999px; font-weight: 650; font-size: 12px; border: 1px solid transparent; }
+.grade.g-hi { color: #1b0f0e; background: var(--hi); }
+.grade.g-mid { color: #1d1606; background: var(--mid); }
+.grade.g-lo { color: #07170f; background: var(--lo); }
+.grade.g-na { color: #e7e9ec; background: transparent; border-color: var(--na); }
+
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { padding: 7px 10px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { position: sticky; top: 0; background: var(--panel-2); color: var(--muted); font-weight: 600; font-size: 12px; }
+th.sortable { cursor: pointer; user-select: none; }
+th.sortable:hover { color: var(--text); }
+td.num, th.num { text-align: right; }
+tr:last-child td { border-bottom: 0; }
+tr.row-click { cursor: pointer; }
+tr.row-click:hover td { background: #20242a; }
+tr.detail td { white-space: normal; background: #171a1e; }
+.detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px 24px; padding: 4px 2px; }
+.detail-grid h4 { margin: 0 0 4px; font-size: 12px; color: var(--muted); font-weight: 600; }
+.sigbar { display: grid; grid-template-columns: 110px 1fr 40px; gap: 8px; align-items: center; font-size: 12px; margin: 3px 0; }
+.sigbar .bar { height: 7px; border-radius: 4px; background: var(--panel-2); overflow: hidden; }
+.sigbar .bar i { display: block; height: 100%; background: var(--accent); }
+
+.metric { display: inline-flex; flex-direction: column; gap: 1px; min-width: 96px; }
+.metric .val { font-weight: 600; }
+.metric .cmp { font-size: 11px; color: var(--muted); }
+.metric .up { color: var(--mid); } .metric .down { color: var(--lo); } .metric .flat { color: var(--muted); }
+
+table.heat td, table.heat th { padding: 6px 8px; font-size: 13px; text-align: center; }
+table.heat td.lab, table.heat th.lab { text-align: left; position: sticky; left: 0; background: var(--panel); z-index: 1; }
+table.heat th.lab { background: var(--panel-2); z-index: 2; }
+table.heat tr.div td.lab { font-weight: 650; }
+table.heat tr.org td.lab { padding-left: 22px; color: var(--text); }
+table.heat td.cell { min-width: 64px; border-left: 1px solid var(--bg); }
+table.heat td.na { color: var(--muted); }
+table.heat tr.protect td.cell { color: var(--muted); }
+
+.dist { display: grid; grid-template-columns: 170px 1fr 60px; gap: 8px 12px; align-items: center; font-size: 13px; }
+.dist .lab.div { font-weight: 650; }
+.dist .lab.org { padding-left: 14px; color: var(--text); }
+.stack { display: flex; height: 18px; border-radius: 5px; overflow: hidden; background: var(--panel-2); }
+.stack i { display: block; height: 100%; font-style: normal; font-size: 11px; line-height: 18px; text-align: center; color: #101214; overflow: hidden; }
+.stack .s0 { background: var(--hi); } .stack .s1 { background: var(--mid); } .stack .s2 { background: var(--lo); } .stack .s3 { background: var(--na); color: #fff; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0 0 10px; font-size: 12px; color: var(--muted); }
+.legend span.sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+
+.chart { position: relative; }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart text { fill: var(--muted); font-size: 11px; }
+.chart .grid line { stroke: var(--line); stroke-width: 1; }
+.chart .tip { position: absolute; pointer-events: none; z-index: 5; min-width: 150px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: #101215; font-size: 12px; box-shadow: 0 4px 14px rgba(0,0,0,.45); }
+.chart .tip b { display: block; margin-bottom: 3px; }
+.chart .tip .r { display: flex; justify-content: space-between; gap: 12px; }
+.serbtns { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.serbtns button { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; min-height: 28px; border-radius: 999px; font-size: 12px; }
+.serbtns button .sw { width: 14px; height: 3px; border-radius: 2px; }
+.serbtns button[aria-pressed="false"] { opacity: .45; text-decoration: line-through; }
+
+details.fold { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
+details.fold > summary { cursor: pointer; padding: 12px 16px; font-weight: 600; list-style: none; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::before { content: "▸"; display: inline-block; margin-right: 8px; color: var(--muted); transition: transform .15s; }
+details.fold[open] > summary::before { transform: rotate(90deg); }
+details.fold .body { padding: 2px 16px 16px; }
+details.fold h3 { margin: 18px 0 6px; font-size: 14px; }
+details.fold ul { margin: 6px 0; padding-left: 20px; }
+details.fold .tablewrap { margin: 6px 0 12px; }
+.note-in { width: 100%; min-width: 120px; }
+input.owner { width: 120px; } input.date { width: 140px; }
+
+footer.foot { margin-top: 40px; color: var(--muted); font-size: 12px; }
+
+@media (max-width: 720px) {
+  :root { --gutter: 14px; }
+  .dist { grid-template-columns: 110px 1fr 44px; }
+  .tile .v { font-size: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media print { .filters, nav.jump { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>퇴직 위험 신호 · 부서별 요약</h1>
+    <div class="sub"><span class="chip" id="chip-base"></span><span class="chip">공유용</span> 개인별 정보는 이 파일에 들어 있지 않습니다.</div>
+  </header>
+  <div class="banner"><b>읽기 전에.</b> 점수는 퇴사 확률이 아니라, 먼저 확인할 대상을 정하는 데 쓰는 지표입니다. 이 화면은 부서 단위 요약만 보여 줍니다.</div>
+  <div id="notices"></div>
+  <nav class="jump"><a href="#s1">1 요약</a><a href="#s2">2 직원별 현황</a><a href="#s3">3 조직 현황</a><a href="#s4">4 월간 변화</a><a href="#s5">5 상세 설명</a></nav>
+
+  <div class="filters" role="search">
+    <label>부서<select id="f-dept" aria-label="부서 필터"></select></label>
+    <span class="count" id="f-count"></span>
+  </div>
+
+  <section class="screen" id="s1"><h2><span class="no">1</span>요약</h2><div id="tiles" class="tiles"></div><ol class="lines" id="lines"></ol></section>
+  <section class="screen" id="s2"><h2><span class="no">2</span>직원별 현황</h2>
+    <div class="reason">공유용 파일에는 직원별 현황(분석용 ID, 개인 점수·등급, 근거 지표)을 넣지 않았습니다. 개인별 현황은 내부용 dashboard.html에서만 볼 수 있습니다.</div></section>
+  <section class="screen" id="s3"><h2><span class="no">3</span>조직 현황</h2>
+    <h3 style="font-size:14px;margin:0 0 8px">부서별 지표 히트맵</h3><div id="heat"></div>
+    <h3 style="font-size:14px;margin:22px 0 8px">부서별 등급 분포</h3><div id="dist"></div></section>
+  <section class="screen" id="s4"><h2><span class="no">4</span>월간 변화</h2><div id="monthly"></div></section>
+  <section class="screen" id="s5"><h2><span class="no">5</span>상세 설명</h2><div id="detail"></div></section>
+  <footer class="foot">이 파일은 외부 주소를 부르지 않는 단일 HTML입니다. 5명 미만 조직의 값은 파일 안에도 들어 있지 않습니다.</footer>
+</div>
+<script id="hr-data" type="application/json">{"meta":{"baseDate":"2026-04-30","ym":"202604","resultFile":"퇴직위험_결과_202604.xlsx","hasSource":true,"minGroup":5,"notices":[]},"summary":{"total":186,"counts":{"상":25,"중":37,"하":110,"판단불가":14},"lines":["기준일 2026-04-30 재직자 186명 중 상 25명(13%), 중 37명, 하 110명, 판단불가 14명입니다. 점수는 우선 확인 순서를 나타내며 퇴사 확률이 아닙니다.","상 등급 비율이 가장 높은 조직은 경영지원본부 총무팀(3/7명) 이고, 가장 많이 나타난 신호는 연차 소진 낮음 53명, 다음은 급여 밴드 하단 38명입니다.","상 등급부터 업무량 점검, 면담, 성장 기회 논의로 확인을 시작하세요. 자발적 퇴사 22건·기준일 1개로 예측 성능은 확인할 수 없습니다. 유지 우선순위는 HR이 따로 판단합니다."]},"signals":["초과근무 증가","평가 변화","근속 구간","연차 소진 낮음","승진 보류","급여 밴드 하단"],"orgs":[{"div":"개발본부","org":null,"n":88,"suppressed":false,"protect":false,"avgScore":27.2,"counts":[11,21,49,7],"sig":[0.206,0.197,0.526,0.142,0.17,0.228],"src":{"ot3":8.38,"rn":3.23,"raise":4.06}},{"div":"개발본부","org":"QA팀","n":20,"suppressed":false,"protect":false,"avgScore":19.5,"counts":[0,4,15,1],"sig":[0.137,0.025,0.545,0.125,0.1,0.206],"src":{"ot3":8.22,"rn":3.15,"raise":3.95}},{"div":"개발본부","org":"데이터팀","n":17,"suppressed":false,"protect":false,"avgScore":32.3,"counts":[4,4,8,1],"sig":[0.191,0.445,0.553,0.118,0.235,0.271],"src":{"ot3":8.23,"rn":3.41,"raise":3.74}},{"div":"개발본부","org":"백엔드팀","n":17,"suppressed":false,"protect":false,"avgScore":26.9,"counts":[3,3,10,1],"sig":[0.147,0.26,0.506,0.206,0.118,0.224],"src":{"ot3":7.88,"rn":3.06,"raise":3.86}},{"div":"개발본부","org":"프론트엔드팀","n":13,"suppressed":false,"protect":false,"avgScore":30.6,"counts":[1,6,5,1],"sig":[0.363,0.1,0.562,0.154,0.154,0.199],"src":{"ot3":9.84,"rn":3.38,"raise":4.18}},{"div":"개발본부","org":"플랫폼팀","n":21,"suppressed":false,"protect":false,"avgScore":28.7,"counts":[3,4,11,3],"sig":[0.242,0.207,0.481,0.119,0.238,0.235],"src":{"ot3":8.09,"rn":3.19,"raise":4.52}},{"div":"경영지원본부","org":null,"n":24,"suppressed":false,"protect":false,"avgScore":26,"counts":[6,0,17,1],"sig":[0.153,0.25,0.492,0.167,0.25,0.269],"src":{"ot3":8.71,"rn":3.12,"raise":3.54}},{"div":"경영지원본부","org":"인사팀","n":9,"suppressed":false,"protect":false,"avgScore":25.1,"counts":[2,0,7,0],"sig":[0.112,0.225,0.522,0.222,0.222,0.349],"src":{"ot3":7.17,"rn":2.89,"raise":3.13}},{"div":"경영지원본부","org":"재무팀","n":8,"suppressed":false,"protect":false,"avgScore":20.8,"counts":[1,0,6,1],"sig":[0.13,0.233,0.362,0.125,0.125,0.209],"src":{"ot3":10.61,"rn":3.38,"raise":4.22}},{"div":"경영지원본부","org":"총무팀","n":7,"suppressed":false,"protect":false,"avgScore":32.3,"counts":[3,0,4,0],"sig":[0.23,0.3,0.6,0.143,0.429,0.234],"src":{"ot3":8.51,"rn":3.14,"raise":3.27}},{"div":"비즈니스본부","org":null,"n":49,"suppressed":false,"protect":false,"avgScore":27.3,"counts":[5,12,29,3],"sig":[0.162,0.222,0.59,0.173,0.163,0.251],"src":{"ot3":9.01,"rn":3.08,"raise":3.95}},{"div":"비즈니스본부","org":"고객지원팀","n":19,"suppressed":false,"protect":false,"avgScore":26.7,"counts":[2,4,10,3],"sig":[0.176,0.136,0.595,0.158,0.158,0.316],"src":{"ot3":9.34,"rn":3.05,"raise":3.73}},{"div":"비즈니스본부","org":"마케팅팀","n":15,"suppressed":false,"protect":false,"avgScore":30.4,"counts":[2,4,9,0],"sig":[0.211,0.236,0.673,0.133,0.2,0.219],"src":{"ot3":8.33,"rn":3.4,"raise":3.72}},{"div":"비즈니스본부","org":"영업팀","n":15,"suppressed":false,"protect":false,"avgScore":24.7,"counts":[1,4,10,0],"sig":[0.099,0.3,0.5,0.233,0.133,0.201],"src":{"ot3":9.3,"rn":2.8,"raise":4.45}},{"div":"프로덕트본부","org":null,"n":25,"suppressed":false,"protect":false,"avgScore":26.3,"counts":[3,4,15,3],"sig":[0.134,0.248,0.556,0.16,0.12,0.237],"src":{"ot3":7.5,"rn":3.36,"raise":4.28}},{"div":"프로덕트본부","org":"기획팀","n":14,"suppressed":false,"protect":false,"avgScore":29.5,"counts":[1,3,7,3],"sig":[0.205,0.255,0.557,0.179,0.143,0.18],"src":{"ot3":8.61,"rn":3.43,"raise":4.06}},{"div":"프로덕트본부","org":"디자인팀","n":11,"suppressed":false,"protect":false,"avgScore":23,"counts":[2,1,8,0],"sig":[0.063,0.24,0.555,0.136,0.091,0.309],"src":{"ot3":6.09,"rn":3.27,"raise":4.55}}],"company":{"ot3":8.47,"rating":3.19,"ratingDelta":-0.02,"raise":3.99,"n":186},"monthly":{"months":["2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04"],"series":{"div:개발본부":{"size":88,"values":[8.34,8.44,8.12,8.33,8.41,8.34,8.04,8.39,8.2,8.73,8.55,7.89]},"div:비즈니스본부":{"size":49,"values":[8.49,7.75,8.76,8.91,9.02,9.14,9.32,8.59,9.12,8.8,8.84,9.2]},"org:개발본부|데이터팀":{"size":17,"values":[8.05,8.55,7.15,8.52,8.26,7.64,8.08,7.89,7.44,8.11,8.44,8.15]},"div:프로덕트본부":{"size":25,"values":[6.85,7.75,7.02,6.47,7.04,6.65,6.93,7.26,7.3,7.47,7.34,7.69]},"org:경영지원본부|인사팀":{"size":9,"values":[6.42,6.86,8.31,8.98,7.6,6.22,6.28,8.2,7.88,6.94,7.29,7.27]},"org:비즈니스본부|영업팀":{"size":15,"values":[8.63,8.75,9.77,9.7,9.27,9.59,9.42,9.55,9.81,9.25,8.89,9.76]},"org:비즈니스본부|고객지원팀":{"size":19,"values":[8.86,7.46,8.87,8.91,9.49,9.39,10.3,8.82,9.28,9.1,9.1,9.31]},"org:개발본부|플랫폼팀":{"size":21,"values":[8.56,8.5,7.81,8.98,8.14,8.34,7,8.98,7.77,8.89,8.25,7.28]},"org:개발본부|프론트엔드팀":{"size":13,"values":[9.82,8.94,8.79,8.58,8.54,8.81,8.6,7.96,9.14,10.28,9.75,9.49]},"org:개발본부|QA팀":{"size":20,"values":[8.3,8.21,8.63,7.58,8.74,8.46,8.54,8.55,8.4,8.64,8.16,7.87]},"org:비즈니스본부|마케팅팀":{"size":15,"values":[7.98,7.12,7.71,8.19,8.3,8.47,8.17,7.39,8.25,7.99,8.47,8.51]},"company":{"size":186,"values":[8.26,8.2,8.31,8.33,8.38,8.33,8.19,8.41,8.39,8.52,8.42,8.42]},"org:프로덕트본부|디자인팀":{"size":11,"values":[6.51,7.97,7.03,5.73,6.39,6.08,6.52,7.62,6.32,6.28,6.42,5.56]},"org:프로덕트본부|기획팀":{"size":14,"values":[7.16,7.53,7.02,7.22,7.68,7.22,7.35,6.9,8.21,8.41,8.07,9.36]},"div:경영지원본부":{"size":24,"values":[9.04,8.74,9.43,9.07,8.4,8.31,7.67,9.19,8.67,8.32,8.25,9.55]},"org:개발본부|백엔드팀":{"size":17,"values":[7.28,8.17,8.15,8.22,8.37,8.51,8.17,8.38,8.45,8.06,8.52,7.17]},"org:경영지원본부|재무팀":{"size":8,"values":[11.73,11.22,11.87,9.51,9.73,10.84,9.1,10.37,11.05,10.94,9.26,11.64]},"org:경영지원본부|총무팀":{"size":7,"values":[9.83,8.78,8.47,8.74,7.99,8.17,8.01,9.27,6.96,7.09,8.33,10.11]}},"unit":"시간/월(1인당 평균)"},"reasons":{"orgMetrics":null,"monthly":null},"detail":{"hypotheses":[["초과근무 증가","최근 3개월 초과근무가 직전 3개월보다 늘면 업무 부담이 커졌다는 신호일 수 있다."],["평가 변화","평가가 하락하거나 낮은 등급에서 정체되면 이탈 위험 신호일 수 있다."],["근속 구간","근속 1~3년처럼 특정 구간에서 이동 가능성이 커질 수 있다."],["연차 소진 낮음","연차를 거의 쓰지 못하면 업무 과중의 보조 신호일 수 있다."],["승진 보류","최근 승진 심사가 보류되면 성장 기회에 대한 불만 신호일 수 있다."],["급여 밴드 하단","급여가 밴드 하단에 머물면 보상 수준에 대한 불만 신호일 수 있다."]],"validation":[{"title":"검증 1. 등급별 실제 결과 (사후 점검, 점수 계산에는 쓰지 않음)","lines":[],"tables":[{"head":["등급","인원","자발적 퇴사 90일 이내","비율","퇴사 180일 이내(유형 불문, 참고)","비율"],"rows":[["상","25","5","20 %","17","68 %"],["중","37","5","14 %","11","30 %"],["하","110","12","11 %","29","26 %"],["판단불가","14","0","0 %","1","7 %"],["전체","186","22","12 %","58"]]}]},{"title":"검증 2. 신호별 반례 확인 (신호 점수가 기준 이상이면 \"신호 있음\")","lines":[],"tables":[{"head":["신호","신호 있음 인원","그중 퇴사","퇴사 비율","신호 없음 인원","그중 퇴사","퇴사 비율","반례 A: 신호 있는데 퇴사 안 함","반례 B: 신호 없는데 퇴사","판단불가 인원"],"rows":[["초과근무 증가","21","2","10 %","151","20","13 %","19","20","14"],["평가 변화","38","8","21 %","111","14","13 %","30","14","37"],["근속 구간","62","6","10 %","124","16","13 %","56","16","0"],["연차 소진 낮음","53","6","11 %","133","16","12 %","47","16","0"],["승진 보류","32","5","16 %","154","17","11 %","27","17","0"],["급여 밴드 하단","38","4","11 %","148","18","12 %","34","18","0"]]}]},{"title":"검증 3. 기준일 이후 정보 사용 여부","lines":[],"tables":[{"head":["사용하지 않은 정보","건수"],"rows":[["v_attendance_monthly: 기준일 이후 월 제외","532"],["hr_performance_reviews: 기준일 이후 확정 평가 제외","161"],["hr_compensation_history: 기준일 이후 시작 이력 제외","0"],["hr_promotion_reviews: 기준일 이후 결정 제외","0"],["hr_personnel_actions: 기준일 이후 발령 제외","58"]]}]},{"title":"분석의 한계","lines":["점수는 직원을 우선 확인할 순서를 나타내는 지표이며 퇴사 확률이 아닙니다.","검증에 쓸 수 있는 자발적 퇴사가 22 건뿐이고 기준일이 하나라 시간 흐름에 따른 검증을 할 수 없습니다. 예측 성능을 확인할 수 없습니다.","퇴사 건수가 기준(30건)보다 적어 위 사후 점검 비율은 우연의 영향이 큽니다. 참고로만 보세요.","가중치와 등급 경계는 초기 설정값이며, 신호를 합산하는 규칙 기반 점수입니다. 입사·근태·평가 데이터에 없는 사정(개인 사유, 외부 제안 등)은 반영하지 못합니다.","유지 우선순위는 위험 점수와 별도로 HR이 판단합니다. 이 점수에는 핵심 인재 여부·성과 가치 같은 유지 판단이 섞여 있지 않고, 점수와 합친 순위도 만들지 않았습니다."],"tables":[]}],"criteria":{"head":["신호","가중치","계산 방식","점수 범위"],"rows":[["초과근무 증가","35","최근 3개월 평균 초과근무 - 직전 3개월 평균 (각 구간 2개월 이상 있어야 계산). 증가분 4시간 이상이면 1","0~1"],["평가 변화","30","최근 확정 평가 vs 직전 확정 평가. 2단계 이상 하락 1.0, 1단계 하락 0.7, 같은 등급이 C 이하이면 0.4, 그 밖에 0","0~1"],["근속 구간","20","1년 미만 0.4, 1~3년 1.0, 3~5년 0.4, 5~10년 0.3, 10년 이상 0.1","0~1"],["연차 소진 낮음","5","연차 사용/부여 비율이 0.10 미만 1, 0.20 미만 0.5","0~1"],["승진 보류","5","최근 24개월 안에 승진 심사 결과가 보류","0 또는 1"],["급여 밴드 하단","5","급여 밴드 안 위치가 중간보다 낮을수록 높음 (최하단 1)","0~1"],["점수 환산","","계산 가능한 신호의 (가중치 x 점수) 합 / 계산 가능한 가중치 합 x 100. 신호가 부족한 직원이 불리해지지 않게 하기 위함"],["판단불가","","계산 가능한 가중치 합이 50 미만이면 점수와 등급을 매기지 않음"],["등급","","상: 50 이상 / 중: 30 이상 50 미만 / 하: 30 미만 (고정 점수 구간)"],["신호 있음 기준","","신호 점수 0.5 이상이면 판단 근거에 표시하고 추가 확인 사항을 붙임"],["점수 산정에서 제외한 정보","","이름, 사번, 병가, 설문 응답/미응답, 성별, 나이·생년월일, 혼인 여부, 국적, 거주지, 퇴사라벨, 인사발령(퇴사 기록)"],["기준일 이후 정보","","기준일(2026-04-30) 이후에 생긴 근태·평가·보상·승진 기록과 퇴사일(인사발령의 퇴사 기록, 퇴사라벨)은 점수 입력에서 모두 제외"],["점수의 의미","","점수는 우선 확인할 순서를 나타내는 지표이며 퇴사 확률이 아닙니다."],["유지 우선순위","","점수와 합치지 않습니다. 핵심 인재 여부·성과 가치 같은 유지 판단은 점수에 넣지 않았고, 누구를 붙잡을지는 HR이 별도로 판단합니다."]]},"dataChecks":{"head":["구분","대상","항목","내용","건수"],"rows":[["정보","v_employees_current","휴직자","휴직 중인 직원은 근태 신호가 적을 수 있습니다","3"],["정보","v_attendance_monthly","기준일 이후 월 제외","기준일 이후에 생긴 근태 행은 사용하지 않았습니다 (사용 가능한 마지막 월 2026-04)","532"],["정보","hr_performance_reviews","기준일 이후 확정 평가 제외","기준일 이후에 확정된 평가는 사용하지 않았습니다","161"],["정보","hr_compensation_history","기준일 이후 시작 이력 제외","기준일 이후에 시작하는 보상 이력은 사용하지 않았습니다","0"],["정보","hr_promotion_reviews","기준일 이후 결정 제외","기준일 이후에 결정된 승진 심사는 사용하지 않았습니다","0"],["정보","hr_personnel_actions","기준일 이후 발령 제외","점수 계산에 쓰지 않았습니다 (퇴사 기록이 점수로 들어가는 것을 막기 위함)","58"],["정보","제외 정보","점수 산정에서 제외","이름, 사번(분석용 ID만 사용), 병가(sick_days), 설문 응답·미응답, 성별, 나이·생년월일, 혼인 여부, 국적, 거주지, 퇴사라벨"],["경고","v_attendance_monthly","초과근무 신호 판단불가","최근 3개월/직전 3개월 중 각각 2개월 이상 근태가 없는 직원","14"],["경고","hr_performance_reviews","평가 변화 판단불가","기준일 이전 확정 평가가 2건 미만인 직원","37"],["경고","점수","등급 판단불가","계산 가능한 신호의 가중치 합이 50 미만이라 등급을 매기지 않았습니다","14"]]},"limits":["점수는 직원을 우선 확인할 순서를 나타내는 지표이며 퇴사 확률이 아닙니다.","검증에 쓸 수 있는 자발적 퇴사가 22 건뿐이고 기준일이 하나라 시간 흐름에 따른 검증을 할 수 없습니다. 예측 성능을 확인할 수 없습니다.","퇴사 건수가 기준(30건)보다 적어 위 사후 점검 비율은 우연의 영향이 큽니다. 참고로만 보세요.","가중치와 등급 경계는 초기 설정값이며, 신호를 합산하는 규칙 기반 점수입니다. 입사·근태·평가 데이터에 없는 사정(개인 사유, 외부 제안 등)은 반영하지 못합니다.","유지 우선순위는 위험 점수와 별도로 HR이 판단합니다. 이 점수에는 핵심 인재 여부·성과 가치 같은 유지 판단이 섞여 있지 않고, 점수와 합친 순위도 만들지 않았습니다."],"conditions":["기준일: 2026-04-30 / 관찰 기간: 기준일 이후 90일 이내 자발적 퇴사 (참고: 180일)","대상: 기준일 재직자 186명 / 입력 파일: 인사데이터_샘플.xlsx","이 파일에는 이름·사번이 없습니다. 행은 분석용 ID로 구분하며, 대응표는 별도 파일(ID매핑)에 있습니다."]}}</script>
+<script>'use strict';
+/* 내부용·공유용 대시보드가 같이 쓰는 도우미. 개인 단위 자료를 다루는 코드는 여기에 넣지 않는다. */
+const GRADES = ['상', '중', '하', '판단불가'];
+const GCLS = { '상': 'g-hi', '중': 'g-mid', '하': 'g-lo', '판단불가': 'g-na' };
+const SERIES_COLORS = ['#7aa7ff', '#f2a65a', '#b78cf4', '#5fd0c1', '#e8cf6a', '#f08fb0', '#8fd16b', '#d98cf0'];
+const SCORE_NOTE = '점수는 퇴사 확률이 아니라, 먼저 확인할 대상을 정하는 데 쓰는 지표입니다.';
+
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt = (v, d = 1) => (v == null || Number.isNaN(v)) ? '—' : Number(v).toFixed(d);
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+const gradeBadge = g => `<span class="grade ${GCLS[g] || 'g-na'}">${esc(g)}</span>`;
+const reasonBox = text => `<div class="reason">${esc(text)}</div>`;
+
+function readData() {
+  const node = document.getElementById('hr-data');
+  try { return JSON.parse(node.textContent); }
+  catch (e) { document.body.innerHTML = '<div class="wrap"><div class="reason">데이터를 읽지 못했습니다. 대시보드를 다시 생성해 주세요.</div></div>'; throw e; }
+}
+
+function renderNotices(el, notices) {
+  el.innerHTML = (notices || []).map(n => `<div class="banner ${n.level === 'warn' ? 'warn' : ''}">${esc(n.text)}</div>`).join('');
+}
+
+/* 요약 타일. filtered가 있으면 "필터 N명"을 작은 글씨로 함께 보인다. */
+function renderTiles(el, o) {
+  const tile = (k, v, f, cls) => `<div class="tile ${cls || ''}"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div><div class="f">${esc(f || '')}</div></div>`;
+  const fl = o.filtered;
+  const sub = n => fl ? `필터 ${n}명` : '';
+  el.innerHTML =
+    tile('분석 기준일', o.baseDate, '', '') +
+    tile('총인원', o.total + '명', fl ? `필터 ${fl.total}명` : '', '') +
+    tile('상', o.counts['상'] + '명', sub(fl && fl.counts['상']), 'g-hi') +
+    tile('중', o.counts['중'] + '명', sub(fl && fl.counts['중']), 'g-mid') +
+    tile('하', o.counts['하'] + '명', sub(fl && fl.counts['하']), 'g-lo') +
+    (o.counts['판단불가'] ? tile('판단불가', o.counts['판단불가'] + '명', sub(fl && fl.counts['판단불가']), 'g-na') : '');
+}
+
+/* 히트맵: 칸 색은 열마다 최소~최대를 기준으로 한 가지 색의 진하기로 나타낸다. 칸 안에 숫자를 함께 쓴다. */
+function heatColor(t) {
+  const a = [38, 42, 49], b = [232, 176, 74];
+  const c = a.map((x, i) => Math.round(x + (b[i] - x) * t));
+  return { bg: `rgb(${c[0]},${c[1]},${c[2]})`, fg: t > 0.6 ? '#14110a' : '#e7e9ec' };
+}
+function renderHeatmap(el, o) {
+  const cols = o.cols, rows = o.rows;
+  const range = {};
+  cols.forEach(c => {
+    const vs = rows.filter(r => !r.suppressed && !r.missing).map(r => r.vals[c.key]).filter(v => v != null && !Number.isNaN(v));
+    range[c.key] = vs.length ? [Math.min(...vs), Math.max(...vs)] : null;
+  });
+  const head = `<tr><th class="lab">부서</th><th class="num">인원</th>${cols.map(c => `<th title="${esc(c.title || c.label)}">${esc(c.label)}</th>`).join('')}</tr>`;
+  const body = rows.map(r => {
+    const lab = `<td class="lab">${esc(r.label)}</td>`;
+    if (r.suppressed) {
+      const why = r.protect ? '보호 처리 (소규모 조직 값을 역산할 수 없도록 함께 가림)' : `표본 부족 (${o.minGroup}명 미만)`;
+      return `<tr class="${r.kind} protect">${lab}<td class="num na">—</td><td class="cell na" colspan="${cols.length}">${esc(why)}</td></tr>`;
+    }
+    if (r.missing) return `<tr class="${r.kind}">${lab}<td class="num na">0</td><td class="cell na" colspan="${cols.length}">필터에 해당하는 직원이 없습니다</td></tr>`;
+    const cells = cols.map(c => {
+      const v = r.vals[c.key], rg = range[c.key];
+      if (v == null || Number.isNaN(v)) return '<td class="cell na">—</td>';
+      const t = rg && rg[1] > rg[0] ? (v - rg[0]) / (rg[1] - rg[0]) : 0.5;
+      const col = heatColor(t);
+      return `<td class="cell" style="background:${col.bg};color:${col.fg}" title="${esc(c.label)}: ${fmt(v, c.dec)}">${fmt(v, c.dec)}</td>`;
+    }).join('');
+    return `<tr class="${r.kind}">${lab}<td class="num">${r.n}</td>${cells}</tr>`;
+  }).join('');
+  el.innerHTML = `<div class="tablewrap"><table class="heat"><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
+}
+
+/* 등급 분포: 가로 누적 막대 */
+function renderDist(el, o) {
+  const legend = `<div class="legend">${GRADES.map((g, i) => `<span><span class="sw" style="background:var(--${['hi', 'mid', 'lo', 'na'][i]})"></span>${g}</span>`).join('')}</div>`;
+  const rows = o.rows.map(r => {
+    const lab = `<div class="lab ${r.kind}">${esc(r.label)}</div>`;
+    if (r.suppressed) return `${lab}<div class="muted small">${r.protect ? '보호 처리' : `표본 부족 (${o.minGroup}명 미만)`}</div><div></div>`;
+    const n = r.n || 0;
+    if (!n) return `${lab}<div class="muted small">필터에 해당하는 직원이 없습니다</div><div class="num">0명</div>`;
+    const segs = r.counts.map((c, i) => c ? `<i class="s${i}" style="width:${(c / n * 100).toFixed(2)}%" title="${GRADES[i]} ${c}명">${c / n > 0.07 ? c : ''}</i>` : '').join('');
+    return `${lab}<div class="stack" role="img" aria-label="${esc(r.label)} 등급 분포 ${GRADES.map((g, i) => g + ' ' + r.counts[i] + '명').join(', ')}">${segs}</div><div class="num small muted">${n}명</div>`;
+  }).join('');
+  el.innerHTML = legend + `<div class="dist">${rows}</div>`;
+}
+
+/* 꺾은선 차트 (SVG 문자열). 선 켜고 끄기, 마우스를 올리면 값 표시, 표로 보기를 함께 제공한다. */
+function renderLineChart(el, o) {
+  const months = o.months, series = o.series;
+  const visible = new Set(series.map(s => s.key));
+  el.innerHTML = '<div class="serbtns"></div><div class="chart"></div><details class="fold" style="margin-top:10px"><summary>표로 보기</summary><div class="body"></div></details>';
+  const btns = $('.serbtns', el), chart = $('.chart', el), tbl = $('.body', el);
+  series.forEach(s => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'ghost'; b.setAttribute('aria-pressed', 'true');
+    b.innerHTML = `<span class="sw" style="background:${s.color}"></span>${esc(s.label)}`;
+    b.addEventListener('click', () => {
+      if (visible.has(s.key)) visible.delete(s.key); else visible.add(s.key);
+      b.setAttribute('aria-pressed', visible.has(s.key) ? 'true' : 'false'); draw();
+    });
+    btns.appendChild(b);
+  });
+  tbl.innerHTML = `<div class="tablewrap"><table><thead><tr><th>월</th>${series.map(s => `<th class="num">${esc(s.label)}</th>`).join('')}</tr></thead><tbody>${months.map((m, i) => `<tr><td>${esc(m)}</td>${series.map(s => `<td class="num">${fmt(s.values[i], 1)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+
+  const W = 760, H = 300, ml = 46, mr = 16, mt = 14, mb = 34, pw = W - ml - mr, ph = H - mt - mb;
+  function draw() {
+    const shown = series.filter(s => visible.has(s.key));
+    const vals = shown.flatMap(s => s.values).filter(v => v != null);
+    let max = vals.length ? Math.max(...vals) : 1;
+    const step = niceStep(max / 4); max = Math.ceil(max * 1.05 / step) * step || step;
+    const x = i => ml + (months.length > 1 ? pw * i / (months.length - 1) : pw / 2);
+    const y = v => mt + ph - (v / max) * ph;
+    let g = '', ticks = '';
+    for (let v = 0; v <= max + 1e-9; v += step) { g += `<line x1="${ml}" x2="${W - mr}" y1="${y(v)}" y2="${y(v)}"/>`; ticks += `<text x="${ml - 6}" y="${y(v) + 4}" text-anchor="end">${fmt(v, step < 1 ? 1 : 0)}</text>`; }
+    const every = Math.max(1, Math.ceil(months.length / 8));
+    const xl = months.map((m, i) => i % every === 0 || i === months.length - 1 ? `<text x="${x(i)}" y="${H - 12}" text-anchor="middle">${esc(m.slice(2))}</text>` : '').join('');
+    const lines = shown.map(s => {
+      let d = '', pen = false, dots = '';
+      s.values.forEach((v, i) => {
+        if (v == null) { pen = false; return; }
+        d += `${pen ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)} `; pen = true;
+        dots += `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="2.6" fill="${s.color}"/>`;
+      });
+      return `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.dash ? 2 : 2.4}" ${s.dash ? 'stroke-dasharray="6 4"' : ''} stroke-linecap="round" stroke-linejoin="round"/>${dots}`;
+    }).join('');
+    chart.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="월간 연장근로 시간 추이"><g class="grid">${g}</g>${ticks}${xl}${lines}<line class="guide" y1="${mt}" y2="${mt + ph}" stroke="#5b626d" stroke-width="1" style="display:none"/></svg><div class="tip" style="display:none"></div><div class="small muted" style="margin-top:4px">${esc(o.unit || '')}${shown.length ? '' : ' · 표시할 선을 위 버튼에서 켜 주세요'}</div>`;
+    const svg = $('svg', chart), tip = $('.tip', chart), guide = $('.guide', svg);
+    svg.addEventListener('mousemove', ev => {
+      const r = svg.getBoundingClientRect(), vx = (ev.clientX - r.left) / r.width * W;
+      let i = Math.round((vx - ml) / pw * (months.length - 1)); i = Math.max(0, Math.min(months.length - 1, i));
+      guide.setAttribute('x1', x(i)); guide.setAttribute('x2', x(i)); guide.style.display = '';
+      tip.innerHTML = `<b>${esc(months[i])}</b>` + shown.map(s => `<div class="r"><span style="color:${s.color}">${esc(s.label)}</span><span>${fmt(s.values[i], 1)}</span></div>`).join('');
+      tip.style.display = '';
+      const cr = chart.getBoundingClientRect(); let left = ev.clientX - cr.left + 14;
+      if (left + tip.offsetWidth > cr.width) left = ev.clientX - cr.left - tip.offsetWidth - 14;
+      tip.style.left = Math.max(0, left) + 'px'; tip.style.top = Math.max(0, ev.clientY - cr.top - 20) + 'px';
+    });
+    svg.addEventListener('mouseleave', () => { tip.style.display = 'none'; guide.style.display = 'none'; });
+  }
+  draw();
+}
+function niceStep(raw) {
+  if (!(raw > 0)) return 1;
+  const p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
+  return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p;
+}
+
+/* 상세 설명: 기본은 접힌 상태 */
+function tableHtml(head, rows) {
+  const th = (head || []).map(c => `<th>${esc(c)}</th>`).join('');
+  const tr = (rows || []).map(r => `<tr>${(head || r).map((_, i) => `<td style="white-space:normal">${esc(r[i] == null ? '' : r[i])}</td>`).join('')}</tr>`).join('');
+  return `<div class="tablewrap"><table><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table></div>`;
+}
+function renderDetail(el, d) {
+  const hyp = (d.hypotheses || []).length ? `<h3>가설</h3><p class="muted small">아래는 검증하기 전의 가정입니다. 검증 결과는 이 가정이 실제 퇴사자 쪽에서 더 많이 나타났는지 사후에 확인한 값입니다.</p><ul>${d.hypotheses.map(h => `<li><b>${esc(h[0])}</b> — ${esc(h[1])}</li>`).join('')}</ul>` : '';
+  const crit = d.criteria ? `<h3>점수 산정 기준</h3>${tableHtml(d.criteria.head, d.criteria.rows)}` : '';
+  const val = (d.validation || []).map(b => `<h3>${esc(b.title)}</h3>${(b.lines || []).length ? `<ul>${b.lines.map(l => `<li>${esc(l)}</li>`).join('')}</ul>` : ''}${(b.tables || []).map(t => tableHtml(t.head, t.rows)).join('')}`).join('');
+  const checks = d.dataChecks ? `<h3>데이터 점검</h3>${tableHtml(d.dataChecks.head, d.dataChecks.rows)}` : '';
+  const cond = (d.conditions || []).length ? `<h3>분석 조건</h3><ul>${d.conditions.map(l => `<li>${esc(l)}</li>`).join('')}</ul>` : '';
+  el.innerHTML = `<details class="fold"><summary>가설 · 검증 결과 · 분석 한계 (펼쳐서 보기)</summary><div class="body">
+    <div class="banner warn"><b>분석의 한계</b><ul>${(d.limits || []).map(l => `<li>${esc(l)}</li>`).join('')}</ul></div>
+    ${hyp}${val}${crit}${cond}${checks}</div></details>`;
+}
+
+function downloadText(name, text, mime) {
+  const blob = new Blob([text], { type: mime || 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+</script>
+<script>'use strict';
+/* 공유용: 부서별 집계만 다룬다. 이 파일의 데이터에는 개인별 행이 없다. */
+const D = readData();
+const MIN = D.meta.minGroup;
+const f = { dept: '' };
+
+$('#chip-base').textContent = '기준일 ' + D.meta.baseDate;
+renderNotices($('#notices'), D.meta.notices);
+
+/* 부서 선택 목록 (가려진 조직은 목록에도 넣지 않는다) */
+(function buildDeptOptions() {
+  const sel = $('#f-dept');
+  sel.innerHTML = '<option value="">전체 부서</option>';
+  let curDiv = null, grp = null;
+  D.orgs.forEach(r => {
+    if (!r.org) {
+      if (r.suppressed) { curDiv = null; return; }
+      grp = document.createElement('optgroup'); grp.label = r.div;
+      const o = document.createElement('option'); o.value = 'div:' + r.div; o.textContent = r.div + ' 전체'; grp.appendChild(o);
+      sel.appendChild(grp); curDiv = r.div; return;
+    }
+    if (r.suppressed || !grp || curDiv !== r.div) return;
+    const o = document.createElement('option'); o.value = 'org:' + r.div + '|' + r.org; o.textContent = r.org; grp.appendChild(o);
+  });
+  sel.addEventListener('change', () => { f.dept = sel.value; render(); });
+})();
+
+function deptRows() {
+  if (!f.dept) return D.orgs;
+  const [t, v] = [f.dept.slice(0, 3), f.dept.slice(4)];
+  if (t === 'div') return D.orgs.filter(r => r.div === v);
+  const [dv, og] = v.split('|');
+  return D.orgs.filter(r => r.div === dv && (!r.org || r.org === og));
+}
+
+function toVals(r) {
+  const v = {};
+  if (r.suppressed) return v;
+  const scored = r.counts[0] + r.counts[1] + r.counts[2];
+  v.score = r.avgScore;
+  v.hiRate = r.n ? r.counts[0] / r.n * 100 : null;
+  D.signals.forEach((_, i) => { v['s' + i] = r.sig ? r.sig[i] : null; });
+  if (r.src) { v.ot3 = r.src.ot3; v.rn = r.src.rn; v.raise = r.src.raise; }
+  return v;
+}
+
+function columns() {
+  const cols = [{ key: 'score', label: '평균 점수', dec: 1, title: '부서 구성원의 점수 평균 (확인 순서 지표, 퇴사 확률 아님)' }, { key: 'hiRate', label: '상 비율(%)', dec: 0 }];
+  D.signals.forEach((s, i) => cols.push({ key: 's' + i, label: s, dec: 2, title: s + ' 신호 점수 평균 (0~1)' }));
+  if (D.meta.hasSource) {
+    cols.push({ key: 'ot3', label: '야근(h/월)', dec: 1, title: '최근 3개월 1인당 평균 초과근무시간' });
+    cols.push({ key: 'rn', label: '평가(1–5)', dec: 2, title: '최근 확정 평가의 평균 (S=5 … D=1)' });
+    cols.push({ key: 'raise', label: '인상률(%)', dec: 1, title: '최근 급여 변동률 평균' });
+  }
+  return cols;
+}
+
+function render() {
+  const rows = deptRows();
+  const selected = f.dept ? rows.filter(r => f.dept.startsWith('org:') ? !!r.org : !r.org)[0] : null;
+
+  /* 1 요약 */
+  let filtered = null;
+  if (selected && !selected.suppressed) {
+    filtered = { total: selected.n, counts: { '상': selected.counts[0], '중': selected.counts[1], '하': selected.counts[2], '판단불가': selected.counts[3] } };
+  }
+  renderTiles($('#tiles'), { baseDate: D.meta.baseDate, total: D.summary.total, counts: D.summary.counts, filtered });
+  $('#lines').innerHTML = (D.summary.lines || []).map(l => `<li>${esc(l)}</li>`).join('');
+  $('#f-count').textContent = f.dept ? (selected && selected.suppressed ? '선택한 부서는 표본 부족으로 값을 표시하지 않습니다' : '부서 필터 적용 중') : '';
+
+  /* 3 조직 현황 */
+  const hrows = rows.map(r => ({ label: r.org || (r.div + ' 전체'), kind: r.org ? 'org' : 'div', suppressed: r.suppressed, protect: r.protect, n: r.n, vals: toVals(r), counts: r.counts }));
+  const divRows = D.orgs.filter(r => !r.org);
+  if (!f.dept && D.meta.hasSource && D.company && divRows.length && !divRows.some(r => r.suppressed)) {
+    const w = divRows.reduce((a, r) => a + (r.counts[0] + r.counts[1] + r.counts[2]), 0);
+    const score = w ? divRows.reduce((a, r) => a + r.avgScore * (r.counts[0] + r.counts[1] + r.counts[2]), 0) / w : null;
+    hrows.push({ label: '회사 전체', kind: 'div', n: D.summary.total, vals: { score, hiRate: D.summary.counts['상'] / D.summary.total * 100, ot3: D.company.ot3, rn: D.company.rating, raise: D.company.raise } });
+  }
+  const heatEl = $('#heat');
+  renderHeatmap(heatEl, { cols: columns(), rows: hrows, minGroup: MIN });
+  if (!D.meta.hasSource && D.reasons.orgMetrics) heatEl.insertAdjacentHTML('beforeend', `<div class="reason" style="margin-top:8px">야근·평가·인상률 열: ${esc(D.reasons.orgMetrics)}</div>`);
+  renderDist($('#dist'), { rows: hrows.filter(r => r.counts || r.suppressed), minGroup: MIN });
+
+  /* 4 월간 변화 */
+  const mEl = $('#monthly');
+  if (!D.monthly) { mEl.innerHTML = reasonBox('월간 변화: ' + D.reasons.monthly); }
+  else {
+    const S = D.monthly.series, keys = [];
+    const dv = f.dept.startsWith('div:') ? f.dept.slice(4) : f.dept.startsWith('org:') ? f.dept.slice(4).split('|')[0] : null;
+    const og = f.dept.startsWith('org:') ? f.dept.slice(4) : null;
+    keys.push(['company', '회사 전체', true]);
+    if (!f.dept) Object.keys(S).filter(k => k.startsWith('div:')).forEach(k => keys.push([k, k.slice(4), false]));
+    else {
+      keys.push(['div:' + dv, dv, false]);
+      if (!og) Object.keys(S).filter(k => k.startsWith('org:' + dv + '|')).forEach(k => keys.push([k, k.split('|')[1], false]));
+      else keys.push(['org:' + og, og.split('|')[1], false]);
+    }
+    const series = keys.filter(k => S[k[0]]).map((k, i) => ({ key: k[0], label: k[1], values: S[k[0]].values, color: k[2] ? '#c9ced6' : SERIES_COLORS[i % SERIES_COLORS.length], dash: k[2] }));
+    mEl.innerHTML = '<div id="mchart"></div><div class="small muted" style="margin-top:6px">월 인원이 5명 미만인 달과 5명 미만 조직은 표시하지 않습니다.</div>';
+    renderLineChart($('#mchart'), { months: D.monthly.months, series, unit: D.monthly.unit });
+  }
+}
+
+renderDetail($('#detail'), D.detail);
+render();
+</script>
+</body>
+</html>
