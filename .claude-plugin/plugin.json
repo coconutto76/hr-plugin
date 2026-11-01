@@ -1,0 +1,10 @@
+{
+  "name": "hr-plugin",
+  "version": "0.1.0",
+  "description": "HR 위험 신호 분석과 대시보드 생성",
+  "author": {
+    "name": "HR 워크숍 팀"
+  },
+  "license": "The Prompt Company",
+  "skills": ["./hr-risk", "./make_dashboard"]
+}

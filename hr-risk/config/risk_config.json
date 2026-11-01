@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "observation": { "primary_days": 90, "reference_days": 180 },
+  "weights": {
+    "overtime": 35,
+    "rating": 30,
+    "tenure": 20,
+    "leave_use": 5,
+    "promotion_hold": 5,
+    "pay_band": 5
+  },
+  "min_available_weight": 50,
+  "grade_cutoffs": { "high": 50, "mid": 30 },
+  "flag_threshold": 0.5,
+  "min_group_size": 5,
+  "min_events_for_validation": 30,
+  "overtime": {
+    "recent_months": 3,
+    "previous_months": 3,
+    "min_months_per_window": 2,
+    "delta_cap_hours": 4
+  },
+  "rating": {
+    "order": ["D", "C", "B", "A", "S"],
+    "drop_2_or_more": 1.0,
+    "drop_1": 0.7,
+    "flat_at_or_below": "C",
+    "flat_low_score": 0.4
+  },
+  "tenure_bins": [
+    { "upto": 1,   "score": 0.4, "label": "1년 미만" },
+    { "upto": 3,   "score": 1.0, "label": "1~3년" },
+    { "upto": 5,   "score": 0.4, "label": "3~5년" },
+    { "upto": 10,  "score": 0.3, "label": "5~10년" },
+    { "upto": 999, "score": 0.1, "label": "10년 이상" }
+  ],
+  "leave_use": { "low_rate": 0.10, "mid_rate": 0.20 },
+  "promotion_hold": { "lookback_months": 24 },
+  "pay_band": { "midpoint": 0.5 },
+  "actions": {
+    "overtime": "업무량·인력 배치 점검",
+    "rating": "면담: 평가 근거와 기대 수준 확인",
+    "tenure": "경력 경로·성장 기회 논의",
+    "leave_use": "휴식·업무량 균형 확인",
+    "promotion_hold": "성장 기회·승진 요건 논의",
+    "pay_band": "보상 수준 논의"
+  }
+}

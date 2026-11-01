@@ -1,0 +1,22 @@
+# 로컬에만 둘 것: 저장소(마켓플레이스)에 올리지 않는다.
+
+# 테스트용 스킬 사본
+.claude/skills/
+
+# 입력·결과 엑셀 (합성 샘플 포함)
+*.xlsx
+
+# ID 매핑 (분석용 ID와 사번 대응표, HR만 보관)
+HR전용_ID매핑/
+ID매핑_*.xlsx
+
+# 생성된 대시보드와 테스트 산출물
+dashboard.html
+dashboard_share.html
+make_dashboard/test_output/
+
+# HR 메모 (대시보드에서 내보낸 확인 기록 JSON)
+확인기록_*.json
+
+# 압축 파일
+*.zip

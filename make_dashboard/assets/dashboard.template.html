@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<style>{{CSS}}</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>퇴직 위험 신호 대시보드</h1>
+    <div class="sub"><span class="chip" id="chip-base"></span><span class="chip">내부용</span><span class="chip" id="chip-src"></span> 직원별 정보가 들어 있으니 HR 담당자만 보세요. 공유할 때는 dashboard_share.html을 쓰세요.</div>
+  </header>
+  <div class="banner"><b>읽기 전에.</b> 점수는 퇴사 확률이 아니라, 먼저 확인할 대상을 정하는 데 쓰는 지표입니다. 필터를 바꿔도 개인의 점수와 등급은 다시 계산하지 않고 결과 파일의 값을 그대로 보여 줍니다. 유지 우선순위는 점수와 합치지 않고 HR이 따로 판단합니다.</div>
+  <div id="notices"></div>
+  <nav class="jump"><a href="#s1">1 요약</a><a href="#s2">2 직원별 현황</a><a href="#s3">3 조직 현황</a><a href="#s4">4 월간 변화</a><a href="#s5">5 상세 설명</a></nav>
+
+  <div class="filters" role="search">
+    <label>부서<select id="f-dept" aria-label="부서 필터"></select></label>
+    <label>검색 (분석용 ID)<input id="f-q" type="search" placeholder="예: R012" autocomplete="off" aria-label="분석용 ID 검색"></label>
+    <label>등급<select id="f-grade" aria-label="등급 필터"></select></label>
+    <label>확인 상태<select id="f-status" aria-label="확인 상태 필터"></select></label>
+    <button type="button" id="f-reset" class="ghost">필터 초기화</button>
+    <span class="spacer"></span>
+    <span class="count" id="f-count"></span>
+    <button type="button" id="btn-export" title="담당자·확인 상태·다음 확인일을 JSON 파일로 저장">확인 기록 내보내기 (JSON)</button>
+    <button type="button" id="btn-import" title="내보낸 JSON 파일에서 확인 기록 불러오기">불러오기</button>
+    <input id="file-import" type="file" accept="application/json,.json" hidden>
+  </div>
+  <div id="storage-warn"></div>
+  <div id="import-msg" role="status" aria-live="polite"></div>
+
+  <section class="screen" id="s1"><h2><span class="no">1</span>요약</h2><div id="tiles" class="tiles"></div><ol class="lines" id="lines"></ol></section>
+  <section class="screen" id="s2"><h2><span class="no">2</span>직원별 현황</h2><div id="people"></div></section>
+  <section class="screen" id="s3"><h2><span class="no">3</span>조직 현황</h2>
+    <h3 style="font-size:14px;margin:0 0 8px">부서별 지표 히트맵</h3><div id="heat"></div>
+    <h3 style="font-size:14px;margin:22px 0 8px">부서별 등급 분포</h3><div id="dist"></div></section>
+  <section class="screen" id="s4"><h2><span class="no">4</span>월간 변화</h2><div id="monthly"></div></section>
+  <section class="screen" id="s5"><h2><span class="no">5</span>상세 설명</h2><div id="detail"></div></section>
+  <footer class="foot">외부 주소를 부르지 않는 단일 HTML입니다. 담당자·확인 상태·다음 확인일은 이 브라우저에만 저장되며, 다른 사람과 나누려면 JSON으로 내보내세요. 내보낸 파일에는 담당자 이름이 들어 있으니 내부 파일로 다루세요.</footer>
+</div>
+<script id="hr-data" type="application/json">{{DATA_JSON}}</script>
+<script>{{COMMON_JS}}</script>
+<script>{{APP_JS}}</script>
+</body>
+</html>

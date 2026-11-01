@@ -1,0 +1,13 @@
+{
+  "name": "hr-team",
+  "owner": {
+    "name": "HR 워크숍 팀"
+  },
+  "plugins": [
+    {
+      "name": "hr-plugin",
+      "source": "./",
+      "description": "HR 위험 신호 분석과 대시보드 생성"
+    }
+  ]
+}
